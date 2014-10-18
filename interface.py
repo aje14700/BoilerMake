@@ -22,7 +22,7 @@ class Server:
     def send(self, sock):
         while(self.connected):
             if(self.data!=self.data_old):
-                sock.send(bytes(self.data, 'UTF-8'))
+                sock.send(self.data.encode('UTF-8'))
                 self.data_old = self.data
             time.sleep(.5)
     
