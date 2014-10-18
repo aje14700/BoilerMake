@@ -20,34 +20,7 @@ class Server:
         self.connected = True
         return s.accept()
 
-    def checkEmail(self):
-        import poplib
-        from email.parser import Parser
-        p = Parser()
-        pop = poplib.POP3_SSL('pop.gmail.com')
-        pop.user('room.lights@gmail.com')
-        pop.pass_('room123456789')
-        self.connected = True
-        while(self.connected):
-            #time.sleep(10)
-            #content = pop.retr(1)[1]
-            #mess = ""
-            #for line in content :
-            #    mess += line
-            #temp = p.parsestr(mess)
-            #front = temp.find("<td>")
-            #back = temp.find("</td>", front+4)
-            #body = temp[front+4 : back]
-            #print body
-            text = ""
-            numMessages = len(pop.list()[1])
-            for i in range(numMessages):
-                for j in pop.retr(i+1)[1]:
-                    text += j +"\n"
-            self.connected = False
-            
-        pop.quit()
-
+        
     def voice(self):
         import pyaudio, wave
         from array import array
@@ -114,20 +87,65 @@ class Server:
                 sock.send(self.data.encode('UTF-8'))
                 self.data_old = self.data
             time.sleep(.1)
-    
-    def main(self):
+
+    def connection(self):
         (sock, (ipclient, ipport)) = self.start()
         send_thread = threading.Thread(target=self.send, args=(sock,))
         send_thread.start()
+
+    def checkEmail(self):
+        import poplib
+        from email import parser
+        import email
+        #p = Parser()
+        self.connected = True
+        while(self.connected):
+            pop = poplib.POP3_SSL('pop.gmail.com')
+            pop.user('room.lights@gmail.com')
+            pop.pass_('room123456789')
+            
+            #print "checking email"
+            time.sleep(1)
+            #Get messages from server:
+            messages = [pop.retr(i) for i in range(1, len(pop.list()[1]) + 1)]
+            # Concat message pieces:
+            messages = ["\n".join(mssg[1]) for mssg in messages]
+            #Parse message intom an email object:
+            messages = [parser.Parser().parsestr(mssg) for mssg in messages]
+            for message in messages:
+                for part in message.walk():
+                    if part.get_content_type():
+                        body = str(part.get_payload(decode=True)).strip()
+                        if("<td>" in body):
+                            first = body.find("<td>")
+                            second = body.find("</td>", first + 4)
+                            self.data = body[first+4:second].strip()
+                        elif(body.find("<")==-1 and body!="None"):
+                            self.data = body.strip()
+            
+            pop.quit()
+            del pop
+
+    def startEmail(self):
+        self.connected = True
+        email_thread = threading.Thread(target=self.checkEmail)
+        email_thread.start()
+        if(email_thread.getName()=="Thread-1"):
+            self.connection()
+            raw_input("Press enter to stop")
+            self.connected = False
+                  
+    def main(self):
+        self.connection()
         voice_thread = threading.Thread(target=self.voice)
         voice_thread.start()
-        
-        while(self.connected):
-            ask = raw_input("data value")
-            if(ask==""):
-                self.connected = False
-            else:
-                self.data = ask
+        self.startEmail()
+##        while(self.connected):
+##            ask = raw_input("data value")
+##            if(ask==""):
+##                self.connected = False
+##            else:
+##                self.data = ask
         
 
 
@@ -170,6 +188,3 @@ class Client:
                 self.set_pin(16, 0)
                 self.set_pin(18, 1)
         GPIO.cleanup()
-            
-
-    
