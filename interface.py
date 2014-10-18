@@ -25,7 +25,7 @@ class Server:
             if(self.data!=self.data_old):
                 sock.send(self.data.encode('UTF-8'))
                 self.data_old = self.data
-            time.sleep(.5)
+            time.sleep(.1)
     
     def main(self):
         (sock, (ipclient, ipport)) = self.start()
@@ -33,7 +33,7 @@ class Server:
         send_thread.start()
         
         while(self.connected):
-            ask = input("data value")
+            ask = raw_input("data value")
             if(ask==""):
                 connected = False
             else:
