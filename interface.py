@@ -51,7 +51,7 @@ class Client:
         return s
 
     def set_pin(self, pin, num):
-        if(data[num]=='0'):
+        if(self.data[num]=='0'):
             GPIO.output(pin, True)
         else:
             GPIO.output(pin, False)
