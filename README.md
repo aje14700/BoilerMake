@@ -4,11 +4,22 @@ Code for voice reconition light system
 
 When running the client on RPi, MUST RUN CLIENT AS SUDO
 
-Dependancies:
-  Server:
-    PsychoPy: http://www.psychopy.org/api/microphone.html
-      for debian: http://neuro.debian.net/install_pkg.html?p=psychopy
-      for other: http://sourceforge.net/projects/psychpy/files/
+Dependencies
+============
+  Server
+    
+    pyaudio: http://people.csail.mit.edu/hubert/pyaudio/
+    pip: apt-get install python-pip
+    SpeechRecognition: pip install SpeechRecognition
+#   
   
-  Client:
-    RPi.GPIO: https://pypi.python.org/pypi/RPi.GPIO
+  Client
+  
+    RPi.GPIO: https://pypi.python.org/pypi/RPi.GPIO 
+ 
+
+Ignore
+======
+PsychoPy: http://www.psychopy.org/api/microphone.html 
+     for debian: http://neuro.debian.net/install_pkg.html?p=psychopy 
+     for other: http://sourceforge.net/projects/psychpy/files/ 
