@@ -22,16 +22,30 @@ class Server:
 
     def checkEmail(self):
         import poplib
-        from email import parser
+        from email.parser import Parser
+        p = Parser()
         pop = poplib.POP3_SSL('pop.gmail.com')
         pop.user('room.lights@gmail.com')
         pop.pass_('room123456789')
         self.connected = True
         while(self.connected):
-            time.sleep(10)
-            content = pop.retr(3)[1]
-            print content.get_payload()
+            #time.sleep(10)
+            #content = pop.retr(1)[1]
+            #mess = ""
+            #for line in content :
+            #    mess += line
+            #temp = p.parsestr(mess)
+            #front = temp.find("<td>")
+            #back = temp.find("</td>", front+4)
+            #body = temp[front+4 : back]
+            #print body
+            text = ""
+            numMessages = len(pop.list()[1])
+            for i in range(numMessages):
+                for j in pop.retr(i+1)[1]:
+                    text += j +"\n"
             self.connected = False
+            
         pop.quit()
 
     def voice(self):
