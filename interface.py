@@ -34,7 +34,7 @@ class Server:
 
         p = pyaudio.PyAudio()
         stream = p.open(format=FORMAT,channels=CHANNELS,rate=RATE,input=True,frames_per_buffer=CHUNK_SIZE)
-        while(this.connected):
+        while(self.connected):
             r = array('h')
             sound_data = array('h', stream.read(CHUNK_SIZE))
             while(max(sound_data)<SILENCE):
