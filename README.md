@@ -11,7 +11,8 @@ Dependencies
     pyaudio: http://people.csail.mit.edu/hubert/pyaudio/
     pip: apt-get install python-pip
     SpeechRecognition: pip install SpeechRecognition
-#   
+      https://pypi.python.org/pypi/SpeechRecognition
+
   
   Client
   
