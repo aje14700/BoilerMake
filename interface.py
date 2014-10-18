@@ -20,6 +20,20 @@ class Server:
         self.connected = True
         return s.accept()
 
+    def checkEmail(self):
+        import poplib
+        from email import parser
+        pop = poplib.POP3_SSL('pop.gmail.com')
+        pop.user('room.lights@gmail.com')
+        pop.pass_('room123456789')
+        self.connected = True
+        while(self.connected):
+            time.sleep(10)
+            content = pop.retr(3)[1]
+            print content.get_payload()
+            self.connected = False
+        pop.quit()
+
     def voice(self):
         import pyaudio, wave
         from array import array
@@ -29,7 +43,7 @@ class Server:
         FORMAT = pyaudio.paInt16
         CHANNELS = 1
         RATE = 16000
-        SILENCE = 3500
+        SILENCE = 5000
 
 
         p = pyaudio.PyAudio()
@@ -102,6 +116,10 @@ class Server:
                 self.data = ask
         
 
+
+
+
+    
 #Client class, runs on raspberry pi to receive commands
 class Client:
     
@@ -139,4 +157,5 @@ class Client:
                 self.set_pin(18, 1)
         GPIO.cleanup()
             
-        
+
+    
