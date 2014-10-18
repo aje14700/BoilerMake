@@ -16,27 +16,27 @@ class Server:
         s.bind((server_ip, port))
         print("Listening for client")
         s.listen(1)
-        connected = True
+        self.connected = True
         return s.accept()
 
     def send(self, sock):
-        while(connected):
-            if(data!=data_old):
-                sock.send(bytes(data, 'UTF-8'))
-                data_old = data
+        while(self.connected):
+            if(self.data!=self.data_old):
+                sock.send(bytes(self.data, 'UTF-8'))
+                self.data_old = self.data
             sleep(.5)
     
     def main(self):
         sock = self.start()
-        send_thread = threading.Thread(target=send, args=(sock,))
+        send_thread = threading.Thread(target=self.send, args=(sock,))
         send_thread.start()
         
-        while(connected):
+        while(self.connected):
             ask = input("data value")
             if(ask==""):
                 connected = False
             else:
-                data = ask
+                self.data = ask
         
 
 #Client class, runs on raspberry pi to receive commands
@@ -47,7 +47,7 @@ class Client:
     def start(self):
         s = socket.socket()
         s.connect((host, port))
-        connected = True
+        self.connected = True
         return s
 
     def set_pin(self, pin, num):
@@ -62,9 +62,9 @@ class Client:
         GPIO.setup(16, GPIO.OUT)
         GPIO.setup(18, GPIO.OUT)
         sock = self.start()
-        while(connected):
+        while(self.connected):
             data_received = sock.recv(10)
-            data = data_received.decode('UTF-8')
+            self.data = data_received.decode('UTF-8')
             print data
             self.set_pin(16, 0)
             self.set_pin(18, 1)
