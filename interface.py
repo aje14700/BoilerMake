@@ -66,9 +66,9 @@ class Server:
             try:
                 said = str(rec.recognize(audio))
                 if (said=="computer light on"):
-                    self.data[0]='a'
+                    self.data='a' + self.data[1:]
                 elif (said=="computer light off"):
-                    self.data[0]='b'
+                    self.data='b' + self.data[1:]
                 else:
                     print "Not a command"
             except LookupError:                                 # speech is unintelligible
@@ -123,6 +123,7 @@ class Client:
     
     def main(self):
         import RPi.GPIO as GPIO
+        GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(16, GPIO.OUT)
         GPIO.setup(18, GPIO.OUT)
