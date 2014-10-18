@@ -17,10 +17,3 @@ Dependencies
   Client
   
     RPi.GPIO: https://pypi.python.org/pypi/RPi.GPIO 
- 
-
-Ignore
-======
-PsychoPy: http://www.psychopy.org/api/microphone.html 
-     for debian: http://neuro.debian.net/install_pkg.html?p=psychopy 
-     for other: http://sourceforge.net/projects/psychpy/files/ 
