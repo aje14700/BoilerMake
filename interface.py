@@ -27,7 +27,7 @@ class Server:
             time.sleep(.5)
     
     def main(self):
-        sock = self.start()
+        (sock, (ipclient, ipport)) = self.start()
         send_thread = threading.Thread(target=self.send, args=(sock,))
         send_thread.start()
         
