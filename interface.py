@@ -7,8 +7,9 @@ server_ip = '192.168.43.159'
 import socket, threading, time
 #Server class, sends commands and works with sound input
 class Server:
-    data = "000"
-    data_old = "000"
+    #a is 1, b is 0
+    data = "bbb"
+    data_old = "aaa"
     connected = False
     
     def start(self):
@@ -53,7 +54,7 @@ class Client:
 
     def set_pin(self, pin, num):
         import RPi.GPIO as GPIO
-        if(self.data[num]=='0'):
+        if(self.data[num]=='b'):
             GPIO.output(pin, True)
         else:
             GPIO.output(pin, False)
