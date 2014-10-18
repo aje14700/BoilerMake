@@ -1,6 +1,7 @@
 BoilerMake
 ==========
 Code for voice reconition light system
+Using a combination of a "server" with a microphone, and a raspberry pi as the "client", this program allows for voice recognition to turn on and off DIO, resulting in lights or other devices to be actuated.
 
 When running the client on RPi, MUST RUN CLIENT AS SUDO
 
