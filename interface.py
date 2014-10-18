@@ -4,7 +4,7 @@
 
 port = 12345
 server_ip = '192.168.43.159'
-import socket, threading
+import socket, threading, time
 #Server class, sends commands and works with sound input
 class Server:
     data = "000"
@@ -24,7 +24,7 @@ class Server:
             if(self.data!=self.data_old):
                 sock.send(bytes(self.data, 'UTF-8'))
                 self.data_old = self.data
-            sleep(.5)
+            time.sleep(.5)
     
     def main(self):
         sock = self.start()
