@@ -32,7 +32,7 @@ class Server:
         send_thread.start()
         
         while(self.connected):
-            ask = input("data value")
+            ask = str(input("data value"))
             if(ask==""):
                 connected = False
             else:
@@ -65,7 +65,7 @@ class Client:
         while(self.connected):
             data_received = sock.recv(10)
             self.data = data_received.decode('UTF-8')
-            print data
+            print self.data
             self.set_pin(16, 0)
             self.set_pin(18, 1)
         GPIO.cleanup()
