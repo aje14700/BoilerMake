@@ -33,7 +33,7 @@ class Server:
         send_thread.start()
         
         while(self.connected):
-            ask = str(input("data value"))
+            ask = input("data value")
             if(ask==""):
                 connected = False
             else:
