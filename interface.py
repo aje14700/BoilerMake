@@ -41,6 +41,7 @@ class Server:
 
 #Client class, runs on raspberry pi to receive commands
 class Client:
+    import RPi.GPIO as GPIO
     data = "000"
     connected = False
     
@@ -57,7 +58,6 @@ class Client:
             GPIO.output(pin, False)
     
     def main(self):
-        import RPi.GPIO as GPIO
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(16, GPIO.OUT)
         GPIO.setup(18, GPIO.OUT)
