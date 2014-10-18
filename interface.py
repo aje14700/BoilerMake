@@ -4,6 +4,7 @@
 
 port = 12345
 server_ip = '192.168.43.159'
+secret_phrase = "abba"
 import socket, threading, time
 #Server class, sends commands and works with sound input
 class Server:
@@ -119,9 +120,13 @@ class Server:
                         if("<td>" in body):
                             first = body.find("<td>")
                             second = body.find("</td>", first + 4)
-                            self.data = body[first+4:second].strip()
+                            body = body[first+4:second].strip()
+                            if(body[:len(secret_phrase)]==secret_phrase):
+                                self.data = body[len(secret_phrase):]
                         elif(body.find("<")==-1 and body!="None"):
-                            self.data = body.strip()
+                            body = body.strip()
+                            if(body[:len(secret_phrase)]==secret_phrase):
+                                self.data = body[len(secret_phrase):]
             
             pop.quit()
             del pop
