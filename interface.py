@@ -100,10 +100,15 @@ class Server:
         import email
         #p = Parser()
         self.connected = True
+        password = ""
+        
+        with open('pass.word', 'r') as f:
+            password = f.read().strip()
+            
         while(self.connected):
             pop = poplib.POP3_SSL('pop.gmail.com')
             pop.user('room.lights@gmail.com')
-            pop.pass_('room123456789')
+            pop.pass_(password)
             
             #print "checking email"
             time.sleep(1)
