@@ -101,7 +101,6 @@ class Server:
         #p = Parser()
         self.connected = True
         password = ""
-        
         with open('pass.word', 'r') as f:
             password = f.read().strip()
             
